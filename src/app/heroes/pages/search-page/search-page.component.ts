@@ -14,6 +14,7 @@ export class SearchPageComponent {
 
   public searchInput = new FormControl('')
   public heroes: Hero[] = []
+  public selectedHero?: Hero
 
   constructor( private heroesService: HeroesService ) {}
 
@@ -25,6 +26,14 @@ export class SearchPageComponent {
   }
 
   onSelectedOption(event: MatAutocompleteSelectedEvent):void {
-    console.log({event})
+    if ( !event.option.value ) {
+      this.selectedHero = undefined
+      return
+    }
+
+    const hero: Hero = event.option.value
+    this.searchInput.setValue(hero.superhero)
+
+    this.selectedHero = hero
   }
 }
